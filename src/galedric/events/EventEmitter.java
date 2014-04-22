@@ -45,6 +45,12 @@ public abstract class EventEmitter implements EventEmitterInterface {
 	protected EventEmitterInterface emitter;
 
 	/**
+	 * If TRUE, the onException() method will be called for each exception
+	 * thrown during the delivery process.
+	 */
+	protected boolean catchExceptions = false;
+
+	/**
 	 * Creates a new EventEmitter.
 	 */
 	public EventEmitter() {
@@ -86,8 +92,15 @@ public abstract class EventEmitter implements EventEmitterInterface {
 				event.trigger(listener, emitter);
 			}
 			catch(Exception e) {
-				// Ignore exceptions when emitting events
+				if(this.catchExceptions) {
+					this.onException(e);
+				}
 			}
 		}
 	}
+
+	/**
+	 * Extend this if you are interested in exceptions during the delivery process
+	 */
+	protected void onException(Exception e) {}
 }

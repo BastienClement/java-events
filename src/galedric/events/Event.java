@@ -107,8 +107,8 @@ public class Event implements Cloneable, Serializable {
 				// Invocation throwed an exception, rethrow it
 				throw e;
 			}
-			catch(Exception e) {
-				// Exception when getting the handler, handler is probably undefined
+			catch(NoSuchMethodException | IllegalAccessException e) {
+				// Exception when gettin / invoking the handler
 
 				if(eventClass == Event.class) {
 					// Event is the super-class of all events
