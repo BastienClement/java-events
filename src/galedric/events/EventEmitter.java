@@ -70,7 +70,7 @@ public abstract class EventEmitter implements EventEmitterInterface {
 	/**
 	 * Binds a listener to this emitter
 	 */
-	public void addListener(EventListener listener) {
+	public synchronized void addListener(EventListener listener) {
 		if(listener != null) {
 			listeners.add(listener);
 		}
@@ -79,14 +79,14 @@ public abstract class EventEmitter implements EventEmitterInterface {
 	/**
 	 * Removes a listener from this emitter.
 	 */
-	public void removeListener(EventListener listener) {
+	public synchronized void removeListener(EventListener listener) {
 		listeners.remove(listener);
 	}
 
 	/**
 	 * Emits an event.
 	 */
-	public void emit(Event event) {
+	public synchronized void emit(Event event) {
 		for(EventListener listener : listeners) {
 			try {
 				event.trigger(listener, emitter);
